@@ -13,9 +13,7 @@
          (setq unread-command-events
                (append unread-command-events
                        (listify-key-sequence (kbd "M-p")))))
-        ((or (memq this-command '(self-insert-command))
-             (and (memq last-command mcfly-commands)
-                  (equal (this-command-keys-vector) (kbd "M-n"))))
+        ((memq this-command '(self-insert-command))
          (if (not (= (point) (minibuffer-prompt-end)))
              (delete-region (point) (point-max))
            (delete-region (minibuffer-prompt-end)
