@@ -7,7 +7,8 @@
 
 (defun mcfly-back-to-present ()
   (remove-hook 'pre-command-hook 'mcfly-back-to-present t)
-  (cond ((equal (this-command-keys-vector) (kbd "M-p"))
+  (cond ((and (memq last-command mcfly-commands)
+              (equal (this-command-keys-vector) (kbd "M-p")))
          ;; repeat one time to get straight to the first history item
          (setq unread-command-events
                (append unread-command-events
