@@ -14,10 +14,8 @@
                (append unread-command-events
                        (listify-key-sequence (kbd "M-p")))))
         ((memq this-command '(self-insert-command))
-         (if (not (= (point) (minibuffer-prompt-end)))
-             (delete-region (point) (point-max))
-           (delete-region (minibuffer-prompt-end)
-                          (point-max))))))
+         (delete-region (point)
+                        (point-max)))))
 
 (defun mcfly-time-travel ()
   (when (memq this-command mcfly-commands)
