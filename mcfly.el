@@ -13,7 +13,9 @@
          (setq unread-command-events
                (append unread-command-events
                        (listify-key-sequence (kbd "M-p")))))
-        ((memq this-command '(self-insert-command))
+        ((or (memq this-command '(self-insert-command))
+             (and (memq last-command mcfly-commands)
+                  (equal (this-command-keys-vector) (kbd "M-n"))))
          (if (not (= (point) (minibuffer-prompt-end)))
              (delete-region (point) (point-max))
            (delete-region (minibuffer-prompt-end)
@@ -35,6 +37,7 @@
 
 ;; setup code
 (add-hook 'minibuffer-setup-hook #'mcfly-time-travel)
+
 (with-eval-after-load 'ivy
   (push (cons 'swiper 'mcfly-swiper)
         ivy-hooks-alist)
