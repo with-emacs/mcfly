@@ -5,6 +5,12 @@
     flush-lines
     keep-lines))
 
+(defvar mcfly-back-commands
+  '(self-insert-command
+    ivy-yank-char
+    ivy-yank-word
+    ivy-yank-symbol))
+
 (defun mcfly-back-to-present ()
   (remove-hook 'pre-command-hook 'mcfly-back-to-present t)
   (cond ((and (memq last-command mcfly-commands)
@@ -13,7 +19,7 @@
          (setq unread-command-events
                (append unread-command-events
                        (listify-key-sequence (kbd "M-p")))))
-        ((memq this-command '(self-insert-command))
+        ((memq this-command mcfly-back-commands)
          (delete-region (point)
                         (point-max)))))
 
